@@ -1,0 +1,18 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="1_init_bdd" author="SGIN">
+        <comment>Initialisation de la bdd</comment>
+        <sqlFile path="sql/init_bdd.sql" relativeToChangelogFile="true" endDelimiter="\nGO"/>
+    </changeSet>
+    <changeSet id="2_insert_datas" author="SGIN">
+        <comment>Ajout de données dans les tables</comment>
+        <sqlFile path="sql/insert_datas.sql" relativeToChangelogFile="true" endDelimiter="\nGO"/>
+    </changeSet>
+    <changeSet id="3_add_jsonb_field" author="SGIN">
+        <comment>Ajout d'une colonne de type JSONB</comment>
+        <sqlFile path="sql/add_jsonb_field.sql" relativeToChangelogFile="true" endDelimiter="\nGO"/>
+    </changeSet>
+</databaseChangeLog>

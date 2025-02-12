@@ -1,0 +1,3 @@
+com\testcontainers\demo\utils\MapperTest.class
+com\testcontainers\demo\service\AthleteServiceImplTest.class
+com\testcontainers\demo\DemoIntegrationTests.class
