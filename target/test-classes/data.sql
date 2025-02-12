@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS athlete
     age bigint NOT NULL,
     sport VARCHAR NOT NULL,
     country VARCHAR NOT NULL,
-    adress json,
+    adress JSONB,
     CONSTRAINT athlete_pkey  PRIMARY KEY (id)
 );
 

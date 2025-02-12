@@ -1,0 +1,21 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  application:
+    name: demo-testcontainers
+  datasource:
+    url: ${POSTGRES_URL}
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  liquibase:
+    enabled: true
+    drop-first: false
+    change-log: db/changelog.xml
+    default-schema: ${POSTGRES_SCHEMA}
+    liquibase-schema: ${POSTGRES_SCHEMA}
+server:
+  forward-headers-strategy: FRAMEWORK
+  servlet:
+    context-path: /api
