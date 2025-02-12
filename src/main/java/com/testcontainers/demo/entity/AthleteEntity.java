@@ -1,10 +1,13 @@
 package com.testcontainers.demo.entity;
 
+import com.testcontainers.demo.dto.Address;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.vladmihalcea.hibernate.type.json.JsonType;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "athlete")
@@ -32,4 +35,8 @@ public class AthleteEntity {
 
     @Column
     private String country;
+
+    @Type(JsonType.class)
+    @Column(name = "address", columnDefinition = "jsonb")
+    private Address address;
 }

@@ -27,4 +27,5 @@ public class AthleteBody {
     private String sport;
     @NotBlank
     private String country;
+    private Address address;
 }

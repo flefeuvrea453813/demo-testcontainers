@@ -11,4 +11,8 @@
         <comment>Ajout de données dans les tables</comment>
         <sqlFile path="sql/insert_datas.sql" relativeToChangelogFile="true" endDelimiter="\nGO"/>
     </changeSet>
+    <changeSet id="3_add_jsonb_field" author="SGIN">
+        <comment>Ajout d'une colonne de type JSONB</comment>
+        <sqlFile path="sql/add_jsonb_field.sql" relativeToChangelogFile="true" endDelimiter="\nGO"/>
+    </changeSet>
 </databaseChangeLog>

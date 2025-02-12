@@ -1,6 +1,7 @@
 package com.testcontainers.demo;
 
 import com.testcontainers.demo.config.AbstractControllerTests;
+import com.testcontainers.demo.dto.Address;
 import com.testcontainers.demo.dto.AthleteBody;
 import com.testcontainers.demo.entity.AthleteEntity;
 import org.junit.jupiter.api.DisplayName;
@@ -74,7 +75,8 @@ class DemoIntegrationTests extends AbstractControllerTests {
                 .andExpect(jsonPath("$[0].firstname", equalTo("Johanne")))
                 .andExpect(jsonPath("$[0].surname", equalTo("Defay")))
                 .andExpect(jsonPath("$[0].country", equalTo("France")))
-                .andExpect(jsonPath("$[0].sport", equalTo("Surf")));
+                .andExpect(jsonPath("$[0].sport", equalTo("Surf")))
+                .andExpect(jsonPath("$[0].address").isEmpty());
     }
 
     @Test
@@ -125,7 +127,8 @@ class DemoIntegrationTests extends AbstractControllerTests {
     @Test
     @DisplayName("Test mise à jour d'un athlete n'existant pas")
     void testUpdateAthleteNotExisting() throws Exception {
-        AthleteBody athleteBody = new AthleteBody("Florian", "Lefeuvre", 20, "Hobby Horse", "France");
+        Address address = new Address(10, "intendance", "33000", "BORDEAUX");
+        AthleteBody athleteBody = new AthleteBody("Florian", "Lefeuvre", 20, "Hobby Horse", "France", address);
 
         this.mockMvc
                 .perform(put("/athlete/10")
@@ -148,7 +151,8 @@ class DemoIntegrationTests extends AbstractControllerTests {
     @Test
     @DisplayName("Test CRUD")
     void testCreateAthlete() throws Exception {
-        AthleteBody athleteBody = new AthleteBody("Florian", "Lefeuvre", 20, "Hobby Horse", "France");
+        Address address = new Address(10, "intendance", "33000", "BORDEAUX");
+        AthleteBody athleteBody = new AthleteBody("Florian", "Lefeuvre", 20, "Hobby Horse", "France", address);
 
         ResultActions resultActions = this.mockMvc
                 .perform(post("/athlete")
@@ -158,7 +162,8 @@ class DemoIntegrationTests extends AbstractControllerTests {
                 .andExpect(status().isCreated());
         String uri = resultActions.andReturn().getResponse().getHeader("uri");
 
-        athleteBody = new AthleteBody("Florian", "Lefeuvre", 40, "Paddle", "France");
+        address.setNumero(12);
+        athleteBody = new AthleteBody("Florian", "Lefeuvre", 40, "Paddle", "France", address);
         this.mockMvc
                 .perform(put(uri)
                         .accept(MediaType.APPLICATION_JSON)
@@ -170,7 +175,12 @@ class DemoIntegrationTests extends AbstractControllerTests {
                 .andExpect(jsonPath("$.firstname", equalTo("Florian")))
                 .andExpect(jsonPath("$.surname", equalTo("Lefeuvre")))
                 .andExpect(jsonPath("$.country", equalTo("France")))
-                .andExpect(jsonPath("$.sport", equalTo("Paddle")));
+                .andExpect(jsonPath("$.sport", equalTo("Paddle")))
+                .andExpect(jsonPath("$.address").exists())
+                .andExpect(jsonPath("$.address.numero", equalTo(12)))
+                .andExpect(jsonPath("$.address.rue", equalTo("intendance")))
+                .andExpect(jsonPath("$.address.code_postal", equalTo("33000")))
+                .andExpect(jsonPath("$.address.ville", equalTo("BORDEAUX")));
 
         this.mockMvc
                 .perform(delete("/athlete/8")

@@ -28,7 +28,7 @@ public class AthleteServiceImpl implements AthleteService {
 
     @Override
     public List<AthleteDto> getAllAthletes() {
-        return athleteRepository.findAll().stream().map(athleteEntity -> Mapper.mapAtheAthleteEntityToAthleteDto(athleteEntity)).collect(Collectors.toList());
+        return athleteRepository.findAll().stream().map(athleteEntity -> Mapper.mapAtheAthleteEntityToAthleteDto(athleteEntity)).sorted((o1, o2) -> ((Long) o1.getId()).compareTo(((Long) o2.getId()))).collect(Collectors.toList());
     }
 
     @Override
@@ -38,17 +38,17 @@ public class AthleteServiceImpl implements AthleteService {
 
     @Override
     public List<AthleteDto> getAthletesBySurname(final String surname) {
-        return athleteRepository.findAllBySurname(surname).stream().map(athleteEntity -> Mapper.mapAtheAthleteEntityToAthleteDto(athleteEntity)).collect(Collectors.toList());
+        return athleteRepository.findAllBySurname(surname).stream().map(athleteEntity -> Mapper.mapAtheAthleteEntityToAthleteDto(athleteEntity)).sorted((o1, o2) -> ((Long) o1.getId()).compareTo(((Long) o2.getId()))).collect(Collectors.toList());
     }
 
     @Override
     public List<AthleteDto> getAthletesBySport(final String sport) {
-        return athleteRepository.findAllBySport(sport).stream().map(athleteEntity -> Mapper.mapAtheAthleteEntityToAthleteDto(athleteEntity)).collect(Collectors.toList());
+        return athleteRepository.findAllBySport(sport).stream().map(athleteEntity -> Mapper.mapAtheAthleteEntityToAthleteDto(athleteEntity)).sorted((o1, o2) -> ((Long) o1.getId()).compareTo(((Long) o2.getId()))).collect(Collectors.toList());
     }
 
     @Override
     public List<AthleteDto> getAthletesByCountry(final String country) {
-        return athleteRepository.findAllByCountry(country).stream().map(athleteEntity -> Mapper.mapAtheAthleteEntityToAthleteDto(athleteEntity)).collect(Collectors.toList());
+        return athleteRepository.findAllByCountry(country).stream().map(athleteEntity -> Mapper.mapAtheAthleteEntityToAthleteDto(athleteEntity)).sorted((o1, o2) -> ((Long) o1.getId()).compareTo(((Long) o2.getId()))).collect(Collectors.toList());
     }
 
     @Override
@@ -64,6 +64,7 @@ public class AthleteServiceImpl implements AthleteService {
         athleteEntity.setAge(athleteBody.getAge());
         athleteEntity.setSport(athleteBody.getSport());
         athleteEntity.setCountry(athleteBody.getCountry());
+        athleteEntity.setAddress(athleteBody.getAddress());
         return Mapper.mapAtheAthleteEntityToAthleteDto(athleteRepository.saveAndFlush(athleteEntity));
     }
 

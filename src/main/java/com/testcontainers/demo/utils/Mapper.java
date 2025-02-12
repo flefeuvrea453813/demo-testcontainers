@@ -7,7 +7,7 @@ import com.testcontainers.demo.entity.AthleteEntity;
 public class Mapper {
 
     public static AthleteDto mapAtheAthleteEntityToAthleteDto(AthleteEntity athleteEntity) {
-        return new AthleteDto(athleteEntity.getId(), athleteEntity.getFirstname(), athleteEntity.getSurname(), athleteEntity.getAge(), athleteEntity.getSport(), athleteEntity.getCountry());
+        return new AthleteDto(athleteEntity.getId(), athleteEntity.getFirstname(), athleteEntity.getSurname(), athleteEntity.getAge(), athleteEntity.getSport(), athleteEntity.getCountry(), athleteEntity.getAddress());
     }
 
     public static AthleteEntity mapAtheAthleteBodyToAthleteEntity(AthleteBody athleteBody) {
@@ -17,6 +17,7 @@ public class Mapper {
         athleteEntity.setAge(athleteBody.getAge());
         athleteEntity.setSport(athleteBody.getSport());
         athleteEntity.setCountry(athleteBody.getCountry());
+        athleteEntity.setAddress(athleteBody.getAddress());
         return  athleteEntity;
     }
 }

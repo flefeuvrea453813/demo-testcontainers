@@ -1,5 +1,6 @@
 package com.testcontainers.demo.service;
 
+import com.testcontainers.demo.dto.Address;
 import com.testcontainers.demo.dto.AthleteBody;
 import com.testcontainers.demo.dto.AthleteDto;
 import com.testcontainers.demo.entity.AthleteEntity;
@@ -56,7 +57,8 @@ public class AthleteServiceImplTest {
     @DisplayName("Test get athlete by id OK")
     void testGetAthleteByIdOk() {
         // Arrange
-        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France");
+        Address address = new Address(10, "intendance", "33000", "BORDEAUX");
+        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France", address);
         Mockito.when(athleteRepository.findById(1L)).thenReturn(Optional.of(athleteEntity));
 
         // Act && Assert
@@ -75,7 +77,8 @@ public class AthleteServiceImplTest {
     @DisplayName("Test get athlete by surname")
     void testGetAthleteBySurnameOk() {
         // Arrange
-        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France");
+        Address address = new Address(10, "intendance", "33000", "BORDEAUX");
+        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France", address);
         Mockito.when(athleteRepository.findAllBySurname("Lefeuvre")).thenReturn(Arrays.asList(athleteEntity));
 
         // Act && Assert
@@ -94,7 +97,8 @@ public class AthleteServiceImplTest {
     @DisplayName("Test get athlete by country")
     void testGetAthleteByCountryOk() {
         // Arrange
-        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France");
+        Address address = new Address(10, "intendance", "33000", "BORDEAUX");
+        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France", address);
         Mockito.when(athleteRepository.findAllByCountry("France")).thenReturn(Arrays.asList(athleteEntity));
 
         // Act && Assert
@@ -113,7 +117,8 @@ public class AthleteServiceImplTest {
     @DisplayName("Test get athlete by sport")
     void testGetAthleteBySportOk() {
         // Arrange
-        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France");
+        Address address = new Address(10, "intendance", "33000", "BORDEAUX");
+        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France", address);
         Mockito.when(athleteRepository.findAllBySport("Paddle")).thenReturn(Arrays.asList(athleteEntity));
 
         // Act && Assert
@@ -132,8 +137,9 @@ public class AthleteServiceImplTest {
     @DisplayName("Test create athlete")
     void testCreateAthlete() {
         // Arrange
-        AthleteBody athleteBody = new AthleteBody("Florian", "Lefeuvre", 40, "Paddle", "France");
-        AthleteEntity athleteEntity = new AthleteEntity(1, athleteBody.getFirstname(), athleteBody.getSurname(), athleteBody.getAge(), athleteBody.getSport(), athleteBody.getCountry());
+        Address address = new Address(10, "intendance", "33000", "BORDEAUX");
+        AthleteBody athleteBody = new AthleteBody("Florian", "Lefeuvre", 40, "Paddle", "France", address);
+        AthleteEntity athleteEntity = new AthleteEntity(1, athleteBody.getFirstname(), athleteBody.getSurname(), athleteBody.getAge(), athleteBody.getSport(), athleteBody.getCountry(), athleteBody.getAddress());
         Mockito.when(athleteRepository.saveAndFlush(Mockito.any(AthleteEntity.class))).thenReturn(athleteEntity);
 
         // Act && Assert
@@ -161,7 +167,8 @@ public class AthleteServiceImplTest {
     @DisplayName("Test delete existaing athlete")
     void testDeleteAthleteOk() {
         // Arrange
-        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France");
+        Address address = new Address(10, "intendance", "33000", "BORDEAUX");
+        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France", address);
         Mockito.when(athleteRepository.findById(1L)).thenReturn(Optional.of(athleteEntity));
 
         // Act && Assert
@@ -174,7 +181,8 @@ public class AthleteServiceImplTest {
     @DisplayName("Test update inexistaing athlete")
     void testUpdateAthleteKo() {
         // Arrange
-        AthleteBody athleteBody = new AthleteBody("Florian", "Lefeuvre", 40, "Paddle", "France");
+        Address address = new Address(10, "intendance", "33000", "BORDEAUX");
+        AthleteBody athleteBody = new AthleteBody("Florian", "Lefeuvre", 40, "Paddle", "France", address);
         Mockito.when(athleteRepository.findById(12L)).thenThrow(new ResourceNotFoundException(""));
 
         // Act && Assert
@@ -185,9 +193,10 @@ public class AthleteServiceImplTest {
     @DisplayName("Test update existaing athlete")
     void testUpdateteAthleteOk() {
         // Arrange
-        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France");
-        AthleteBody athleteBody = new AthleteBody("Florian", "Lefeuvre", 40, "Tennis", "France");
-        AthleteEntity athleteEntityUpdated = new AthleteEntity(1,  athleteBody.getFirstname(),  athleteBody.getSurname(),  athleteBody.getAge(),  athleteBody.getSport(), athleteBody.getCountry());
+        Address address = new Address(10, "intendance", "33000", "BORDEAUX");
+        AthleteEntity athleteEntity = new AthleteEntity(1, "Florian", "Lefeuvre", 40, "Paddle", "France", address);
+        AthleteBody athleteBody = new AthleteBody("Florian", "Lefeuvre", 40, "Tennis", "France", address);
+        AthleteEntity athleteEntityUpdated = new AthleteEntity(1,  athleteBody.getFirstname(),  athleteBody.getSurname(),  athleteBody.getAge(),  athleteBody.getSport(), athleteBody.getCountry(), athleteBody.getAddress());
         Mockito.when(athleteRepository.findById(1L)).thenReturn(Optional.of(athleteEntity));
         Mockito.when(athleteRepository.saveAndFlush(Mockito.any(AthleteEntity.class))).thenReturn(athleteEntity);
 
